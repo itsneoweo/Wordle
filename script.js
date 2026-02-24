@@ -29,7 +29,7 @@ document.onkeydown = (e) => {
   if (e.key === "Enter") button.click();
 };
 
-button.addEventListener("click", () => {
+function wordleHandler() {
   const guess = input.value.toUpperCase();
 
   if (guess.length === 5 && validWords.includes(guess)) {
@@ -68,10 +68,16 @@ button.addEventListener("click", () => {
     input.value = "";
     if (guess === answerWord) {
       message.innerText = "You've Won!";
-    } else if (gridPointer === 30) {
+    } else if (gridPointer === 30) { // how far can we reach
       message.innerText = "Correct Word: " + answerWord;
+      button.removeEventListener("click", wordleHandler);
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
     }
   }
-});
+}
+
+button.addEventListener("click", wordleHandler);
 
 setInterval(() => input.focus(), 100);
